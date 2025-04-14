@@ -3,8 +3,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io"
-	"net/http"
+
+	//"github.com/Dev-Jace/pokedex/internal/pokecache"
+	web_pull "github.com/Dev-Jace/pokedex/internal/web_pull"
 )
 
 type Map_Location struct {
@@ -18,9 +19,6 @@ type Map_Location struct {
 }
 
 func commandMap(config *Config) error {
-	//fmt.Println(`This will be a map utility`) //test functionality of call
-	//implement pokeAPI
-	// https://www.boot.dev/lessons/813eafe1-2e1d-42a0-b358-53e0f4d4fdc8
 
 	//pull data from PokeAPI site
 	pokeAPI_URL := "https://pokeapi.co/api/v2/location-area/"
@@ -29,21 +27,9 @@ func commandMap(config *Config) error {
 		pokeAPI_URL = config.next_URL // use the next location call provided if map has already been called
 	}
 
-	res, err := http.Get(pokeAPI_URL)
-	if err != nil {
-		fmt.Printf("\n~website error: %v~\n", err)
-		return nil
-	}
-	body, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	if res.StatusCode > 299 {
-		fmt.Printf("\n~Response failed with status code: %d and\nbody: %s~\n", res.StatusCode, body)
-		return nil
-	}
-	if err != nil {
-		fmt.Printf("\n~~read error: %v~\n", err)
-		return nil
-	}
+	//check cache
+	//if cache doesn't have add to cache new pull
+	body, err := web_pull.Web_pull(pokeAPI_URL)
 
 	var map_locations Map_Location
 	errr := json.Unmarshal(body, &map_locations)
@@ -80,21 +66,9 @@ func commandMapb(config *Config) error {
 		pokeAPI_URL = config.prev_URL // use the next location call provided if map has already been called
 	}
 
-	res, err := http.Get(pokeAPI_URL)
-	if err != nil {
-		fmt.Printf("\n~website error: %v~\n", err)
-		return nil
-	}
-	body, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	if res.StatusCode > 299 {
-		fmt.Printf("\n~Response failed with status code: %d and\nbody: %s~\n", res.StatusCode, body)
-		return nil
-	}
-	if err != nil {
-		fmt.Printf("\n~~read error: %v~\n", err)
-		return nil
-	}
+	//check cache
+	//if cache doesn't have add to cache new pull
+	body, err := web_pull.Web_pull(pokeAPI_URL)
 
 	var map_locations Map_Location
 	errr := json.Unmarshal(body, &map_locations)
