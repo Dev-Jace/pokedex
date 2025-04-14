@@ -25,5 +25,5 @@ func Web_pull(pokeAPI_URL string) ([]byte, string) {
 		return empty, err_type
 	}
 
-	return body, err_type
+	return body, ""
 }

@@ -28,12 +28,23 @@ func commandMap(config *Config) error {
 	}
 
 	//check cache
-	//if cache doesn't have add to cache new pull
-	body, err := web_pull.Web_pull(pokeAPI_URL)
+	body, exists := config.cachePntr.Get(pokeAPI_URL)
+	fmt.Println("~~had value in cache:", exists)
+	if !exists {
+		fmt.Println("~not cached~")
+		//if cache doesn't have add to cache new pull
+		var errS string
+		body, errS = web_pull.Web_pull(pokeAPI_URL)
+		if errS != "" {
+			fmt.Println(errS)
+		} else {
+			config.cachePntr.Add(pokeAPI_URL, body)
+		}
+	}
 
 	var map_locations Map_Location
-	errr := json.Unmarshal(body, &map_locations)
-	if errr != nil {
+	err := json.Unmarshal(body, &map_locations)
+	if err != nil {
 		fmt.Printf("\nerrr~decode error: %v~\n", err)
 		return nil
 	}
@@ -67,12 +78,21 @@ func commandMapb(config *Config) error {
 	}
 
 	//check cache
-	//if cache doesn't have add to cache new pull
-	body, err := web_pull.Web_pull(pokeAPI_URL)
+	body, exists := config.cachePntr.Get(pokeAPI_URL)
+	fmt.Println("~~had value in cache:", exists)
+	if !exists {
+		//if cache doesn't have add to cache new pull
+		var errS string
+		body, errS = web_pull.Web_pull(pokeAPI_URL)
+		if errS != "" {
+			fmt.Println(errS)
+		}
+		config.cachePntr.Add(pokeAPI_URL, body)
+	}
 
 	var map_locations Map_Location
-	errr := json.Unmarshal(body, &map_locations)
-	if errr != nil {
+	err := json.Unmarshal(body, &map_locations)
+	if err != nil {
 		fmt.Printf("\nerrr~decode error: %v~\n", err)
 		return nil
 	}

@@ -5,11 +5,15 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
+
+	"github.com/Dev-Jace/pokedex/internal/pokecache"
 )
 
 type Config struct {
-	prev_URL string
-	next_URL string
+	prev_URL  string
+	next_URL  string
+	cachePntr *pokecache.Cache
 }
 
 func startRepl() {
@@ -18,6 +22,9 @@ func startRepl() {
 		prev_URL: "none",
 		next_URL: "none",
 	}
+	//make 'cache'
+	cache := pokecache.NewCache(5 * time.Second)
+	URL_config.cachePntr = cache
 
 	for {
 		fmt.Print("Pokedex > ") //, scanner.Text()
