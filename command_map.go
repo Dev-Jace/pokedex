@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 
-	//"github.com/Dev-Jace/pokedex/internal/pokecache"
 	web_pull "github.com/Dev-Jace/pokedex/internal/web_pull"
 )
 
@@ -18,7 +17,7 @@ type Map_Location struct {
 	} `json:"results"`
 }
 
-func commandMap(config *Config) error {
+func commandMap(config *Config, supCommand string) error {
 
 	//pull data from PokeAPI site
 	pokeAPI_URL := "https://pokeapi.co/api/v2/location-area/"
@@ -29,9 +28,7 @@ func commandMap(config *Config) error {
 
 	//check cache
 	body, exists := config.cachePntr.Get(pokeAPI_URL)
-	fmt.Println("~~had value in cache:", exists)
 	if !exists {
-		fmt.Println("~not cached~")
 		//if cache doesn't have add to cache new pull
 		var errS string
 		body, errS = web_pull.Web_pull(pokeAPI_URL)
@@ -67,7 +64,7 @@ func commandMap(config *Config) error {
 	return nil
 }
 
-func commandMapb(config *Config) error {
+func commandMapb(config *Config, supCommand string) error {
 	pokeAPI_URL := "https://pokeapi.co/api/v2/location-area/"
 
 	if config.prev_URL == "none" {

@@ -35,10 +35,14 @@ func startRepl() {
 		}
 
 		commandName := usrInput[0]
+		var supCommand string
+		if len(usrInput) > 1 {
+			supCommand = usrInput[1]
+		}
 		commands := getCommands()
 		_, exists := commands[commandName]
 		if exists {
-			err := commands[commandName].callback(&URL_config)
+			err := commands[commandName].callback(&URL_config, supCommand)
 			if err != nil {
 				fmt.Printf("encountered error: '%v'\n", err)
 			}
@@ -58,7 +62,7 @@ func cleanInput(text string) []string {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*Config) error
+	callback    func(*Config, string) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -83,6 +87,21 @@ func getCommands() map[string]cliCommand {
 			name:        "mapb",
 			description: "Display previous map locations",
 			callback:    commandMapb,
+		},
+		"explore": {
+			name:        "explore",
+			description: "Explore a map location's Pokemon",
+			callback:    commandExplore,
+		},
+		"catch": {
+			name:        "catch",
+			description: "try and catch a Pokemon",
+			callback:    commandCatch,
+		},
+		"inspect": {
+			name:        "inspect",
+			description: "get the stats of a caught pokemon",
+			callback:    commandInspect,
 		},
 	}
 }
