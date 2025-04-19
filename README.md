@@ -1,6 +1,8 @@
 Potential functionality improvements to make:
  - Update the CLI to support the "up" arrow to cycle through previous commands
  - Simulate battles between pokemon
+ - - make all moves that could be learned available
+   - make a "stamina" to limit move spamming
  - Add more unit tests
  - Refactor your code to organize it better and make it more testable
  - Keep pokemon in a "party" and allow them to level up
