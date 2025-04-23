@@ -5,6 +5,7 @@ Potential functionality improvements to make:
    - make a "stamina" to limit move spamming
  - Add more unit tests
  - Refactor your code to organize it better and make it more testable
+ - 
  - Keep pokemon in a "party" and allow them to level up
  - Allow for pokemon that are caught to evolve after a set amount of time
  - - alternately use an exp gauge to follow the games better
