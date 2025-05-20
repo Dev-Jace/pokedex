@@ -7,6 +7,7 @@ Potential functionality improvements to make:
  - Refactor your code to organize it better and make it more testable
  - - make a commands folder
  - Keep pokemon in a "party" and allow them to level up
+ - - xp for battling mon based on input vs lvl diff
  - Allow for pokemon that are caught to evolve after a set amount of time
  - - alternately use an exp gauge to follow the games better
    - - add an exp penalty for when/if pokemon faint
