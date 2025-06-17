@@ -1,5 +1,6 @@
 Potential functionality improvements to make:
  - Update the CLI to support the "up" arrow to cycle through previous commands
+ - 
  - Simulate battles between pokemon
  - - make all moves that could normally be learned available
    - make a "stamina" to limit move spamming
