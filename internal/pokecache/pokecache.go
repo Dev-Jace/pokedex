@@ -129,6 +129,22 @@ func (c *Cache) GetPKMN(name string) string {
 	}
 
 }
+func (c *Cache) GetPKMNList() string {
+	//lock mutex
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	exists := c.pokeDex
+	response := ""
+	if len(exists) > 0 {
+		for key, _ := range exists {
+			response += fmt.Sprintf("- %v \n", key)
+		}
+		return response
+	} else {
+		return "You have not yet caught any Pokemon"
+	}
+
+}
 func (c *Cache) statFormatter(name string) string {
 	pkmn := c.pokeDex[name]
 	statSheet := fmt.Sprintf(`Name: %v
